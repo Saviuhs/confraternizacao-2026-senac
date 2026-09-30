@@ -5,8 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Design system — Confraria festiva
- * Paleta quente de festa: creme, tinta, terracota, dourado e verde-folha.
+ * Design system — Confraria Senac
+ * Cores institucionais do Senac: laranja e azul-marinho, com dourado de apoio.
  */
 
 @theme inline {
@@ -45,27 +45,27 @@
 
 :root {
   --radius: 0.75rem;
-  --background: oklch(0.965 0.018 88); /* creme #FBF4E9 */
-  --foreground: oklch(0.25 0.03 55); /* tinta #2B2018 */
-  --card: oklch(1 0 0 / 70%);
-  --card-foreground: oklch(0.25 0.03 55);
-  --popover: oklch(0.98 0.01 88);
-  --popover-foreground: oklch(0.25 0.03 55);
-  --primary: oklch(0.52 0.13 45); /* terracota #C0562B */
-  --primary-foreground: oklch(0.965 0.018 88);
-  --secondary: oklch(0.93 0.03 85);
-  --secondary-foreground: oklch(0.25 0.03 55);
-  --muted: oklch(0.93 0.03 85);
-  --muted-foreground: oklch(0.45 0.03 55);
-  --accent: oklch(0.72 0.12 80); /* dourado #E0A93E */
-  --accent-foreground: oklch(0.25 0.03 55);
-  --gold: oklch(0.72 0.12 80);
-  --leaf: oklch(0.5 0.07 140); /* verde-folha #4E6B4A */
+  --background: oklch(0.975 0.012 75); /* off-white quente */
+  --foreground: oklch(0.32 0.06 255); /* azul-marinho Senac #0B2E59 */
+  --card: oklch(1 0 0 / 72%);
+  --card-foreground: oklch(0.32 0.06 255);
+  --popover: oklch(0.98 0.008 75);
+  --popover-foreground: oklch(0.32 0.06 255);
+  --primary: oklch(0.66 0.185 45); /* laranja Senac #EE7421 */
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.94 0.02 60);
+  --secondary-foreground: oklch(0.32 0.06 255);
+  --muted: oklch(0.94 0.015 75);
+  --muted-foreground: oklch(0.45 0.03 255);
+  --accent: oklch(0.75 0.14 75); /* dourado #E8A93C */
+  --accent-foreground: oklch(0.32 0.06 255);
+  --gold: oklch(0.75 0.14 75);
+  --leaf: oklch(0.53 0.13 250); /* azul Senac #005CA9 (badge/barras) */
   --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.965 0.018 88);
-  --border: oklch(0.25 0.03 55 / 10%);
-  --input: oklch(0.25 0.03 55 / 15%);
-  --ring: oklch(0.52 0.13 45);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.32 0.06 255 / 10%);
+  --input: oklch(0.32 0.06 255 / 15%);
+  --ring: oklch(0.66 0.185 45);
 }
 
 @layer base {
