@@ -14,13 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      votes: {
+        Row: {
+          created_at: string
+          id: string
+          option_id: string
+          voter_name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          option_id: string
+          voter_name: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          option_id?: string
+          voter_name?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_vote_counts: {
+        Args: never
+        Returns: {
+          option_id: string
+          total: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
