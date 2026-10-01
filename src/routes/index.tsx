@@ -3,44 +3,74 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { castVote, getVoteCounts, type OptionId } from "@/lib/votes.functions";
 
-import imgChurrascaria from "@/assets/churrascaria.jpg";
-import imgRestaurante from "@/assets/restaurante.jpg";
-import imgSitio from "@/assets/sitio.jpg";
-import imgEspaco from "@/assets/espaco.jpg";
+import imgFloresta from "@/assets/casa-floresta.jpg.asset.json";
+import imgColmeia from "@/assets/colmeia.jpg.asset.json";
+import imgEspetinhos from "@/assets/espetinhos.jpg.asset.json";
+import imgIntercity from "@/assets/intercity.jpg.asset.json";
 
 const OPTIONS: {
   id: OptionId;
   name: string;
+  address: string;
   description: string;
+  menu: string;
+  comfort: string;
+  comfortScore: number;
+  services: string;
+  conditions: string;
   image: string;
   barClass: string;
 }[] = [
   {
     id: "churrascaria",
-    name: "Churrascaria do Vale",
-    description: "Rodízio completo, jardim ao ar livre e música ao vivo para a galera.",
-    image: imgChurrascaria,
+    name: "Casa Floresta",
+    address: "Av. Luiz Gonzaga das Neves, 2600 — Tremembé, São Paulo",
+    description: "Buffet completo com estação de pratos quentes, áreas cobertas e ao ar livre.",
+    menu: "Aperitivos e estação de salada. Pratos quentes: arroz, arroz carreteiro, feijão branco com calabresa, farofa crocante, lasanha de queijo ou ao sugo, penne ao molho branco com bacon, frango em isca crocante, isca de peixe, ratatouille de legumes, brócolis e couve gratinados, pernil à moda da casa, almôndegas, carne de panela, coxinha, bolinha de queijo, polenta, mandioca e batata frita. Bebidas: água, sucos naturais e refrigerantes.",
+    comfort: "2 aparadores de madeira, 6 réchauds prateados, mesas de madeira, cadeiras (3 modelos mistos), pratos brancos e talheres de inox.",
+    comfortScore: 2,
+    services: "Áreas cobertas e ao ar livre; equipe de garçons.",
+    conditions: "Sem DJ; sem transporte.",
+    image: imgFloresta.url,
     barClass: "bg-primary",
   },
   {
     id: "restaurante",
-    name: "Restaurante Jardim",
-    description: "Cardápio variado, ambiente acolhedor e sobremesas que são um espetáculo.",
-    image: imgRestaurante,
+    name: "Restaurante Colmeia",
+    address: "Estrada Municipal Jesus Antônio de Miranda, 27 — Pindamonhangaba",
+    description: "Mesa de frios, fogão a lenha e sobremesas caseiras.",
+    menu: "Mesa de frios: defumados (lombo, copa), queijos, salame, azeitonas, ovinho de codorna, barquete de salpicão, palmito, antepasto de berinjela, pães, batatinhas e saladas. Fogão a lenha: tender à Califórnia, fraldinha defumada, filé de frango ao molho de maracujá, macarrão à bolonhesa, arroz, tutu de feijão, farofa, batata e mandioca fritas. Sobremesas: pavê de chocolate, salada de frutas, doces caseiros. Bebidas: refrigerantes (normal e zero), água mineral, suco natural.",
+    comfort: "Mesas de madeira, cadeiras (3 modelos mistos), pratos brancos e talheres de inox.",
+    comfortScore: 2,
+    services: "Áreas cobertas e ao ar livre; equipe de garçons.",
+    conditions: "Com DJ ou transporte (um dos dois).",
+    image: imgColmeia.url,
     barClass: "bg-gold",
   },
   {
     id: "sitio",
-    name: "Sítio Boa Vista",
-    description: "Fogueira, céu estrelado e espaço de sobra para brindar o ano.",
-    image: imgSitio,
+    name: "Espetinhos Futebol Clube",
+    address: "R. Cônego João Antônio da Costa Bueno, 55 — Santana, Pindamonhangaba",
+    description: "Espetinhos, porções e bebidas, com banda ou DJ incluso.",
+    menu: "Espetinhos, porções e bebidas.",
+    comfort: "Mesas e cadeiras de madeira, pratos brancos e talheres de inox.",
+    comfortScore: 1,
+    services: "Área coberta; equipe de garçons; banda ou DJ inclusos.",
+    conditions: "Não tem estacionamento.",
+    image: imgEspetinhos.url,
     barClass: "bg-leaf",
   },
   {
     id: "espaco",
-    name: "Espaço Aurora",
-    description: "Salão climatizado, pista de dança e buffet montado para a festa.",
-    image: imgEspaco,
+    name: "Hotel Intercity Pátio Pinda",
+    address: "Pindamonhangaba",
+    description: "Ambiente climatizado, finger food variado e DJ incluso.",
+    menu: "Estação de pães, antepastos de sardella e berinjela, saladinha individual, mini espetinho de presunto e queijo, dadinhos de tapioca com geleia de pimenta, frango crocante, escondidinho de carne, croquetas de cupim com queijo, torresmo à pururuca com vinagrete de manga, pastel (queijo/carne), calabresa acebolada, mandioca frita. Doces: frutas da estação e pudim de leite. Bebidas: água mineral, suco e refrigerante.",
+    comfort: "Mesas de madeira, cadeiras estofadas, pratos brancos, talheres de inox, copos e taças para cada bebida.",
+    comfortScore: 3,
+    services: "Ambiente climatizado e coberto; equipe de garçons; DJ incluso.",
+    conditions: "Estacionamento R$ 12,00. Taxa de rolha: R$ 40,00 (whisky/vodka) e R$ 30,00 (vinhos/espumantes) por garrafa.",
+    image: imgIntercity.url,
     barClass: "bg-foreground/45",
   },
 ];
@@ -233,9 +263,32 @@ function Index() {
                 <h3 className="mt-4 font-display text-lg font-semibold tracking-tight">
                   {option.name}
                 </h3>
+                <p className="mt-1 text-xs text-foreground/50">{option.address}</p>
                 <p className="mt-1.5 text-sm text-pretty text-foreground/65">
                   {option.description}
                 </p>
+                <p className="mt-2 text-xs font-semibold text-foreground/70">
+                  Conforto:{" "}
+                  <span className="text-gold">
+                    {"★".repeat(option.comfortScore)}
+                    {"☆".repeat(3 - option.comfortScore)}
+                  </span>{" "}
+                  ({option.comfortScore}/3)
+                </p>
+                <details
+                  className="mt-2 text-xs text-foreground/70"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <summary className="cursor-pointer font-semibold text-primary">
+                    Ver detalhes
+                  </summary>
+                  <div className="mt-2 space-y-2">
+                    <p><strong>Cardápio:</strong> {option.menu}</p>
+                    <p><strong>Estrutura:</strong> {option.comfort}</p>
+                    <p><strong>Serviços:</strong> {option.services}</p>
+                    <p><strong>Condições:</strong> {option.conditions}</p>
+                  </div>
+                </details>
                 <span
                   className={`mt-4 block w-full rounded-full py-2.5 text-center text-sm font-semibold ring-1 transition-transform duration-200 ${
                     isSelected
