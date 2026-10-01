@@ -63,7 +63,7 @@ const OPTIONS: {
   {
     id: "espaco",
     name: "Hotel Intercity Pátio Pinda",
-    address: "Pindamonhangaba",
+    address: "Rodovia Amador Bueno da Veiga, 2007 — Pindamonhangaba",
     description: "Ambiente climatizado, finger food variado e DJ incluso.",
     menu: "Estação de pães, antepastos de sardella e berinjela, saladinha individual, mini espetinho de presunto e queijo, dadinhos de tapioca com geleia de pimenta, frango crocante, escondidinho de carne, croquetas de cupim com queijo, torresmo à pururuca com vinagrete de manga, pastel (queijo/carne), calabresa acebolada, mandioca frita. Doces: frutas da estação e pudim de leite. Bebidas: água mineral, suco e refrigerante.",
     comfort: "Mesas de madeira, cadeiras estofadas, pratos brancos, talheres de inox, copos e taças para cada bebida.",
@@ -154,7 +154,7 @@ function Index() {
             </span>
           </div>
           <span className="text-xs font-medium text-foreground/55 sm:text-sm">
-            Votação aberta até 15 de dezembro
+            Votação aberta até 10 de outubro
           </span>
         </div>
       </div>
@@ -364,8 +364,8 @@ function Index() {
                 <p className="mt-2 max-w-[48ch] text-sm text-pretty text-background/75 sm:text-base">
                   Você escolheu{" "}
                   <span className="font-semibold text-gold">{votedOption.name}</span>.
-                  Obrigado por participar — o resultado final é revelado no dia 20 de
-                  dezembro.
+                  Obrigado por participar — o resultado final é divulgado no dia 30 de
+                  novembro e a confraternização será em 04/12/2026.
                 </p>
               </div>
             </div>
