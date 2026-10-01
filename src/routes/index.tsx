@@ -243,12 +243,16 @@ function Index() {
           {OPTIONS.map((option) => {
             const isSelected = selected === option.id;
             return (
-              <button
+              <div
                 key={option.id}
-                type="button"
+                role="button"
+                tabIndex={0}
                 onClick={() => !votedFor && setSelected(option.id)}
-                disabled={!!votedFor}
-                className={`group rounded-[min(1.4vw,18px)] bg-card p-4 text-left ring-1 transition-transform duration-300 hover:-translate-y-1.5 disabled:hover:translate-y-0 ${
+                onKeyDown={(e) => {
+                  if ((e.key === "Enter" || e.key === " ") && !votedFor) setSelected(option.id);
+                }}
+                aria-pressed={isSelected}
+                className={`group cursor-pointer rounded-[min(1.4vw,18px)] bg-card p-4 text-left ring-1 transition-transform duration-300 ${votedFor ? "" : "hover:-translate-y-1.5"} ${
                   isSelected ? "ring-2 ring-primary" : "ring-foreground/5"
                 }`}
               >
@@ -298,7 +302,7 @@ function Index() {
                 >
                   {isSelected ? "Selecionado ✓" : "Escolher este"}
                 </span>
-              </button>
+              </div>
             );
           })}
         </div>
