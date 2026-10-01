@@ -78,13 +78,13 @@ const OPTIONS: {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Confraria 2026 — Votação da Confraternização dos Professores" },
+      { title: "Confraternização Senac Pindamonhangaba 04/12/2026 — Votação do Local" },
       {
         name: "description",
         content:
           "Professores, votem no local da nossa confraternização de fim de ano e acompanhem o resultado ao vivo.",
       },
-      { property: "og:title", content: "Confraria 2026 — Votação da Confraternização" },
+      { property: "og:title", content: "Confraternização Senac Pindamonhangaba 04/12/2026" },
       {
         property: "og:description",
         content: "Escolha o lugar da nossa festa de fim de ano. Cada voto conta!",
@@ -150,7 +150,7 @@ function Index() {
               C
             </span>
             <span className="font-display text-lg font-semibold tracking-tight">
-              Confraria 2026
+              Confraternização Senac Pindamonhangaba 04/12/2026
             </span>
           </div>
           <span className="text-xs font-medium text-foreground/55 sm:text-sm">
@@ -389,7 +389,7 @@ function Index() {
       <div className="border-t border-foreground/10">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-5 py-6 sm:flex-row sm:px-8">
           <span className="text-sm text-foreground/55">
-            Confraria 2026 · Associação de Professores
+            Confraternização Senac Pindamonhangaba 04/12/2026 · Associação de Professores
           </span>
           <span className="text-xs text-foreground/40">
             Um voto por professor · resultados em tempo real

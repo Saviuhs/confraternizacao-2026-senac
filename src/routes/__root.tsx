@@ -77,13 +77,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Confraria 2026 — Votação da Confraternização" },
+      { title: "Confraternização Senac Pindamonhangaba 04/12/2026" },
       {
         name: "description",
         content:
           "Professores, votem no local da nossa confraternização de fim de ano e acompanhem o resultado ao vivo.",
       },
-      { property: "og:title", content: "Confraria 2026 — Votação da Confraternização" },
+      { property: "og:title", content: "Confraternização Senac Pindamonhangaba 04/12/2026" },
       {
         property: "og:description",
         content: "Escolha o lugar da nossa festa de fim de ano. Cada voto conta!",
