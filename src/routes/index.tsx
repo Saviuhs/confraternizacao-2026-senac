@@ -7,30 +7,41 @@ import imgFloresta from "@/assets/casa-floresta.jpg.asset.json";
 import imgColmeia from "@/assets/colmeia.jpg.asset.json";
 import imgEspetinhos from "@/assets/espetinhos.jpg.asset.json";
 import imgIntercity from "@/assets/intercity.jpg.asset.json";
+import imgArmazem from "@/assets/armazem-fazenda.png.asset.json";
 
 const OPTIONS: {
   id: OptionId;
   name: string;
   address: string;
+  distance: string;
   description: string;
   menu: string;
   comfort: string;
-  comfortScore: number;
+  spaceScore: number;
+  foodScore: number;
+  parkingScore: number;
   services: string;
   conditions: string;
+  price?: string;
+  transportNotice?: string;
   image: string;
   barClass: string;
 }[] = [
   {
     id: "churrascaria",
     name: "Casa Floresta",
-    address: "Av. Luiz Gonzaga das Neves, 2600 — Tremembé, São Paulo",
+    address: "Avenida Luiz Gonzaga das Neves, 2600 — Tremembé, São Paulo",
+    distance: "Aproximadamente 17,8 km · 32 min do Senac",
     description: "Buffet completo com estação de pratos quentes, áreas cobertas e ao ar livre.",
-    menu: "Aperitivos e estação de salada. Pratos quentes: arroz, arroz carreteiro, feijão branco com calabresa, farofa crocante, lasanha de queijo ou ao sugo, penne ao molho branco com bacon, frango em isca crocante, isca de peixe, ratatouille de legumes, brócolis e couve gratinados, pernil à moda da casa, almôndegas, carne de panela, coxinha, bolinha de queijo, polenta, mandioca e batata frita. Bebidas: água, sucos naturais e refrigerantes.",
-    comfort: "2 aparadores de madeira, 6 réchauds prateados, mesas de madeira, cadeiras (3 modelos mistos), pratos brancos e talheres de inox.",
-    comfortScore: 2,
-    services: "Áreas cobertas e ao ar livre; equipe de garçons.",
-    conditions: "Sem DJ; sem transporte.",
+    menu: "Aperitivos e estação de saladas. Pratos quentes: arroz, arroz carreteiro, feijão-branco com calabresa, farofa crocante, lasanha de queijo ou ao sugo, penne ao molho branco com bacon, iscas de frango crocantes, iscas de peixe, ratatouille de legumes, brócolis e couve gratinados, pernil à moda da casa, almôndegas, carne de panela, coxinha, bolinha de queijo, polenta, mandioca e batata frita. Bebidas: água, sucos naturais e refrigerantes.",
+    comfort: "Dois aparadores de madeira, seis réchauds prateados, mesas de madeira, cadeiras de três modelos, pratos brancos e talheres de inox.",
+    spaceScore: 2,
+    foodScore: 3,
+    parkingScore: 3,
+    services: "Ambiente com áreas cobertas e ao ar livre; equipe de garçons para atendimento aos convidados.",
+    conditions: "Possibilidade de transporte, conforme a necessidade e o interesse dos participantes.",
+    price: "R$ 23.310,00; DJ: R$ 3.000,00. Total: R$ 26.310,00.",
+    transportNotice: "Possibilidade de transporte, conforme a necessidade e o interesse dos participantes.",
     image: imgFloresta.url,
     barClass: "bg-primary",
   },
@@ -38,25 +49,34 @@ const OPTIONS: {
     id: "restaurante",
     name: "Restaurante Colmeia",
     address: "Estrada Municipal Jesus Antônio de Miranda, 27 — Pindamonhangaba",
-    description: "Mesa de frios, fogão a lenha e sobremesas caseiras.",
-    menu: "Mesa de frios: defumados (lombo, copa), queijos, salame, azeitonas, ovinho de codorna, barquete de salpicão, palmito, antepasto de berinjela, pães, batatinhas e saladas. Fogão a lenha: tender à Califórnia, fraldinha defumada, filé de frango ao molho de maracujá, macarrão à bolonhesa, arroz, tutu de feijão, farofa, batata e mandioca fritas. Sobremesas: pavê de chocolate, salada de frutas, doces caseiros. Bebidas: refrigerantes (normal e zero), água mineral, suco natural.",
-    comfort: "Mesas de madeira, cadeiras (3 modelos mistos), pratos brancos e talheres de inox.",
-    comfortScore: 2,
-    services: "Áreas cobertas e ao ar livre; equipe de garçons.",
-    conditions: "Com DJ ou transporte (um dos dois).",
+    distance: "Aproximadamente 11,8 km · 20 min do Senac",
+    description: "Mesa de frios, fogão a lenha, churrasco texano e sobremesas caseiras.",
+    menu: "Mesa de frios: defumados (lombo e copa), queijos, salame, azeitonas, ovos de codorna, barquetes de salpicão, palmito, antepasto de berinjela, pães, batatinhas ao molho e com mostarda, saladas e salada coleslaw. Fogão a lenha: mac and cheese, arroz, feijão texano, farofa, batata rústica e mandioca frita. Churrasco texano: brisket Angus, short ribs Angus, beef hump, pork ribs, linguiça defumada e frango defumado. Sobremesas: pavê de chocolate, salada de frutas e doces caseiros. Bebidas: Coca-Cola, guaraná Antarctica, versões zero, água mineral e suco natural da época.",
+    comfort: "Salão com gerador de energia, mesas e cadeiras, palco, toalhas, arranjos simples de flores, pratos de sobremesa, recipientes para porções, guardanapos de tecido, talheres, copos, bandejas, travessas e tampos de vidro para frios e doces.",
+    spaceScore: 2,
+    foodScore: 3,
+    parkingScore: 3,
+    services: "Ambiente com áreas cobertas e ao ar livre; música ao vivo; limpeza do salão antes e depois; garçons, cozinheira, ajudantes e recepcionista.",
+    conditions: "Possibilidade de transporte, conforme a necessidade e o interesse dos participantes.",
+    price: "R$ 19.560,00; quatro ônibus: R$ 1.210,00 cada; DJ: R$ 1.500,00. Total: R$ 25.900,00.",
+    transportNotice: "Possibilidade de transporte, conforme a necessidade e o interesse dos participantes.",
     image: imgColmeia.url,
     barClass: "bg-gold",
   },
   {
     id: "sitio",
     name: "Espetinhos Futebol Clube",
-    address: "R. Cônego João Antônio da Costa Bueno, 55 — Santana, Pindamonhangaba",
+    address: "Rua Cônego João Antônio da Costa Bueno, 55 — Santana, Pindamonhangaba",
+    distance: "Aproximadamente 1,1 km · 3 min do Senac",
     description: "Espetinhos, porções e bebidas, com banda ou DJ incluso.",
-    menu: "Espetinhos, porções e bebidas.",
+    menu: "Variedade de espetinhos e porções. Bebidas: água mineral, suco e refrigerante.",
     comfort: "Mesas e cadeiras de madeira, pratos brancos e talheres de inox.",
-    comfortScore: 1,
+    spaceScore: 2,
+    foodScore: 3,
+    parkingScore: 0,
     services: "Área coberta; equipe de garçons; banda ou DJ inclusos.",
-    conditions: "Não tem estacionamento.",
+    conditions: "Não há estacionamento.",
+    price: "O valor não foi informado; o local informou que consegue atender dentro do orçamento.",
     image: imgEspetinhos.url,
     barClass: "bg-leaf",
   },
@@ -64,14 +84,34 @@ const OPTIONS: {
     id: "espaco",
     name: "Hotel Intercity Pátio Pinda",
     address: "Rodovia Amador Bueno da Veiga, 2007 — Pindamonhangaba",
+    distance: "Aproximadamente 5,8 km · 14 min do Senac",
     description: "Ambiente climatizado, finger food variado e DJ incluso.",
-    menu: "Estação de pães, antepastos de sardella e berinjela, saladinha individual, mini espetinho de presunto e queijo, dadinhos de tapioca com geleia de pimenta, frango crocante, escondidinho de carne, croquetas de cupim com queijo, torresmo à pururuca com vinagrete de manga, pastel (queijo/carne), calabresa acebolada, mandioca frita. Doces: frutas da estação e pudim de leite. Bebidas: água mineral, suco e refrigerante.",
-    comfort: "Mesas de madeira, cadeiras estofadas, pratos brancos, talheres de inox, copos e taças para cada bebida.",
-    comfortScore: 3,
+    menu: "Estação de pães; antepastos de sardella e berinjela; salada individual de alface, tomate, pepino e cebola-roxa; mini espetinho de presunto, queijo e azeitona; dadinhos de tapioca com geleia de pimenta; frango crocante; escondidinho de carne; croquetas de cupim recheadas com queijo e aioli; torresmo à pururuca com vinagrete de manga; pastéis de queijo e carne; calabresa acebolada; mandioca frita. Doces: frutas da estação e pudim de leite. Bebidas: água mineral, suco e refrigerante.",
+    comfort: "Mesas de madeira, cadeiras de madeira estofadas, pratos brancos, talheres de inox, copos e taças adequados para cada bebida.",
+    spaceScore: 3,
+    foodScore: 3,
+    parkingScore: 0,
     services: "Ambiente climatizado e coberto; equipe de garçons; DJ incluso.",
     conditions: "Estacionamento R$ 12,00. Taxa de rolha: R$ 40,00 (whisky/vodka) e R$ 30,00 (vinhos/espumantes) por garrafa.",
+    price: "R$ 21.980,00.",
     image: imgIntercity.url,
     barClass: "bg-foreground/45",
+  },
+  {
+    id: "armazem",
+    name: "Armazém da Fazenda — Restaurante e Pizzaria",
+    address: "Avenida Nossa Senhora do Bom Sucesso, 4275 — Nossa Senhora do Perpétuo Socorro, Pindamonhangaba",
+    distance: "Aproximadamente 8,2 km · 14 min do Senac",
+    description: "Pizzas, porções e bebidas, com banda ou DJ incluso.",
+    menu: "Variedade de pizzas e porções. Bebidas: água mineral, suco e refrigerante.",
+    comfort: "Mesas de madeira, cadeiras de madeira estofadas, pratos brancos, talheres de inox, copos e taças adequados para cada bebida.",
+    spaceScore: 2,
+    foodScore: 3,
+    parkingScore: 3,
+    services: "Ambiente com área coberta; equipe de garçons; banda ou DJ inclusos.",
+    conditions: "Estacionamento disponível.",
+    image: imgArmazem.url,
+    barClass: "bg-primary/70",
   },
 ];
 
@@ -255,7 +295,7 @@ function Index() {
           <span className="text-sm text-foreground/50">Um voto por professor</span>
         </div>
 
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {OPTIONS.map((option) => {
             const isSelected = selected === option.id;
             return (
@@ -284,17 +324,20 @@ function Index() {
                   {option.name}
                 </h3>
                 <p className="mt-1 text-xs text-foreground/50">{option.address}</p>
+                <p className="mt-2 text-xs font-semibold text-primary">{option.distance}</p>
                 <p className="mt-1.5 text-sm text-pretty text-foreground/65">
                   {option.description}
                 </p>
-                <p className="mt-2 text-xs font-semibold text-foreground/70">
-                  Conforto:{" "}
-                  <span className="text-gold">
-                    {"★".repeat(option.comfortScore)}
-                    {"☆".repeat(3 - option.comfortScore)}
-                  </span>{" "}
-                  ({option.comfortScore}/3)
-                </p>
+                {option.transportNotice && (
+                  <p className="mt-3 border-l-4 border-primary bg-primary/10 px-3 py-2 text-sm font-bold leading-snug text-foreground">
+                    {option.transportNotice}
+                  </p>
+                )}
+                <div className="mt-3 grid grid-cols-3 gap-1 border-y border-foreground/10 py-2 text-center text-xs font-semibold text-foreground/70">
+                  <span>Espaço {option.spaceScore}/3</span>
+                  <span>Comida {option.foodScore}/3</span>
+                  <span>Estacionamento {option.parkingScore}/3</span>
+                </div>
                 <details
                   className="mt-2 text-xs text-foreground/70"
                   onClick={(e) => e.stopPropagation()}
@@ -307,6 +350,7 @@ function Index() {
                     <p><strong>Estrutura:</strong> {option.comfort}</p>
                     <p><strong>Serviços:</strong> {option.services}</p>
                     <p><strong>Condições:</strong> {option.conditions}</p>
+                     {option.price && <p><strong>Valor informado:</strong> {option.price}</p>}
                   </div>
                 </details>
                 <span

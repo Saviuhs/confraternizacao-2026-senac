@@ -1,2 +1,2 @@
 # Roadmap
-- [ ] Atualizar cinco locais, distâncias, avisos e zerar votos
+- [x] Atualizar cinco locais, distâncias, avisos e zerar votos
