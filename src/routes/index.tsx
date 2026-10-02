@@ -350,7 +350,6 @@ function Index() {
                     <p><strong>Estrutura:</strong> {option.comfort}</p>
                     <p><strong>Serviços:</strong> {option.services}</p>
                     <p><strong>Condições:</strong> {option.conditions}</p>
-                     {option.price && <p><strong>Valor informado:</strong> {option.price}</p>}
                   </div>
                 </details>
                 <span
