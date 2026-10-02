@@ -3,7 +3,13 @@ import { createClient } from "@supabase/supabase-js";
 import { z } from "zod";
 import type { Database } from "@/integrations/supabase/types";
 
-export const OPTION_IDS = ["churrascaria", "restaurante", "sitio", "espaco"] as const;
+export const OPTION_IDS = [
+  "churrascaria",
+  "restaurante",
+  "sitio",
+  "espaco",
+  "armazem",
+] as const;
 export type OptionId = (typeof OPTION_IDS)[number];
 
 function publicClient() {
