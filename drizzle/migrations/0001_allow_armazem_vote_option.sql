@@ -1,0 +1,2 @@
+ALTER TABLE public.votes DROP CONSTRAINT votes_option_id_check;
+ALTER TABLE public.votes ADD CONSTRAINT votes_option_id_check CHECK (option_id IN ('churrascaria', 'restaurante', 'sitio', 'espaco', 'armazem'));
