@@ -172,7 +172,7 @@ function Index() {
               <span className="italic text-primary">confraternização</span> de fim de
               ano?
             </h1>
-            <div className="mt-5 max-w-[48ch] space-y-4 text-base text-pretty text-foreground sm:text-lg leading-relaxed">
+            <div className="mt-5 max-w-[48ch] space-y-4 text-base font-bold text-pretty text-foreground sm:text-lg leading-relaxed">
               <p>
                 Visando definir o local da nossa confraternização de fim de ano,
                 que será realizada em 04/12/2026, convidamos todos e todas a
@@ -183,12 +183,14 @@ function Index() {
                 opinião de cada pessoa é fundamental para que possamos escolher o
                 local que melhor atenda às preferências do grupo.
               </p>
-                <p>
-                  Contamos com a participação de todos e todas. Os resultados
-                  poderão ser acompanhados em tempo real. A opção mais votada
-                  será considerada como prioridade desde que esteja dentro do
-                  orçamento disponível e atenda os critérios de contratação.
-                </p>
+              <p>
+                Contamos com a participação de todos e todas. Os resultados
+                poderão ser acompanhados em tempo real. A opção mais votada
+                será considerada como prioridade, desde que esteja dentro do
+                orçamento disponível e atenda aos critérios de contratação. Caso
+                não atenda a esses critérios de contratação, seguiremos para o
+                próximo, sucessivamente, entre os mais votados.
+              </p>
             </div>
             <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
               <div className="flex items-baseline gap-1.5">
