@@ -172,7 +172,7 @@ function Index() {
               <span className="italic text-primary">confraternização</span> de fim de
               ano?
             </h1>
-            <div className="mt-5 max-w-[46ch] space-y-3 text-sm text-pretty text-foreground/70 sm:text-base">
+            <div className="mt-5 max-w-[48ch] space-y-4 text-base text-pretty text-foreground sm:text-lg leading-relaxed">
               <p>
                 Visando definir o local da nossa confraternização de fim de ano,
                 que será realizada em 04/12/2026, convidamos todos e todas a
