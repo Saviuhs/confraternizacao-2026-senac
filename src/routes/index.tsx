@@ -183,10 +183,12 @@ function Index() {
                 opinião de cada pessoa é fundamental para que possamos escolher o
                 local que melhor atenda às preferências do grupo.
               </p>
-              <p>
-                Contamos com a participação de todos e todas. Os resultados
-                poderão ser acompanhados em tempo real.
-              </p>
+                <p>
+                  Contamos com a participação de todos e todas. Os resultados
+                  poderão ser acompanhados em tempo real. A opção mais votada
+                  será considerada como prioridade desde que esteja dentro do
+                  orçamento disponível e atenda os critérios de contratação.
+                </p>
             </div>
             <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
               <div className="flex items-baseline gap-1.5">
