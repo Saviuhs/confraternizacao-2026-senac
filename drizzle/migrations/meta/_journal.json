@@ -8,6 +8,13 @@
       "when": 1790784723004,
       "tag": "0000_create_votes_table",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1790957380013,
+      "tag": "0001_allow_armazem_vote_option",
+      "breakpoints": true
     }
   ]
 }
