@@ -334,9 +334,26 @@ function Index() {
                   </p>
                 )}
                 <div className="mt-3 grid grid-cols-3 gap-1 border-y border-foreground/10 py-2 text-center text-xs font-semibold text-foreground/70">
-                  <span>Espaço {option.spaceScore}/3</span>
-                  <span>Comida {option.foodScore}/3</span>
-                  <span>Estacionamento {option.parkingScore}/3</span>
+                  {(
+                    [
+                      ["Espaço", option.spaceScore],
+                      ["Comida", option.foodScore],
+                      ["Estacionamento", option.parkingScore],
+                    ] as const
+                  ).map(([label, score]) => (
+                    <div key={label}>
+                      <div
+                        className="text-[13px] leading-none tracking-tight text-gold"
+                        aria-label={`${label}: ${score} de 3`}
+                      >
+                        {"★".repeat(score)}
+                        <span className="text-foreground/25">
+                          {"★".repeat(3 - score)}
+                        </span>
+                      </div>
+                      <span className="mt-1 block">{label}</span>
+                    </div>
+                  ))}
                 </div>
                 <details
                   className="mt-2 text-xs text-foreground/70"
