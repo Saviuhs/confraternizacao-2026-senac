@@ -3,11 +3,11 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { castVote, getVoteCounts, type OptionId } from "@/lib/votes.functions";
 
-import imgFloresta from "@/assets/casa-floresta.jpg.asset.json";
-import imgColmeia from "@/assets/colmeia.jpg.asset.json";
-import imgEspetinhos from "@/assets/espetinhos.jpg.asset.json";
-import imgIntercity from "@/assets/intercity.jpg.asset.json";
-import imgArmazem from "@/assets/armazem-fazenda.png.asset.json";
+const imgFloresta = { url: "/venues/casa-floresta.jpg" };
+const imgColmeia = { url: "/venues/colmeia.jpg" };
+const imgEspetinhos = { url: "/venues/espetinhos.jpg" };
+const imgIntercity = { url: "/venues/intercity.jpg" };
+const imgArmazem = { url: "/venues/armazem-fazenda.png" };
 
 const OPTIONS: {
   id: OptionId;
