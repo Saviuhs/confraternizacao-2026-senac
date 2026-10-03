@@ -12,9 +12,19 @@ export const OPTION_IDS = [
 ] as const;
 export type OptionId = (typeof OPTION_IDS)[number];
 
+// Publishable (public) values used as fallback when hosting outside Lovable
+// (e.g. Vercel) doesn't define the server env vars.
+const FALLBACK_URL = "https://gpxqmprrdodvhhoznjbg.supabase.co";
+const FALLBACK_KEY = "sb_publishable_XtIxDidmRGribIwHX_-ofg_Wg8aKyS3";
+
 function publicClient() {
-  const key = process.env["SUPABASE_PUBLISHABLE_KEY"]!;
-  return createClient<Database>(process.env["SUPABASE_URL"]!, key, {
+  const key =
+    process.env["SUPABASE_PUBLISHABLE_KEY"] ||
+    import.meta.env["VITE_SUPABASE_PUBLISHABLE_KEY"] ||
+    FALLBACK_KEY;
+  const url =
+    process.env["SUPABASE_URL"] || import.meta.env["VITE_SUPABASE_URL"] || FALLBACK_URL;
+  return createClient<Database>(url, key, {
     auth: { persistSession: false },
     global: {
       fetch: (input, init) => {

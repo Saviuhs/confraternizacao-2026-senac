@@ -10,3 +10,4 @@
 <!-- LOVABLE:END -->
 
 - Keep the existing vote option identifiers stable when venue content changes, because persisted vote totals depend on them.
+- Vote server functions fall back to the public (publishable) backend URL/key when server env vars are missing, so external hosts like Vercel work without extra setup.
