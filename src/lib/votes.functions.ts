@@ -12,6 +12,9 @@ export const OPTION_IDS = [
 ] as const;
 export type OptionId = (typeof OPTION_IDS)[number];
 
+// Fim da votação: 08/10/2026, 23:59:59 no horário de Brasília (UTC-3).
+export const VOTING_DEADLINE_ISO = "2026-10-09T03:00:00.000Z";
+
 // Publishable (public) values used as fallback when hosting outside Lovable
 // (e.g. Vercel) doesn't define the server env vars.
 const FALLBACK_URL = "https://gpxqmprrdodvhhoznjbg.supabase.co";
@@ -65,6 +68,9 @@ export const castVote = createServerFn({ method: "POST" })
   .inputValidator((data) => voteSchema.parse(data))
   .handler(async ({ data }) => {
     const supabase = publicClient();
+    if (Date.now() >= Date.parse(VOTING_DEADLINE_ISO)) {
+      return { ok: false as const, reason: "closed" as const };
+    }
     const { error } = await supabase.from("votes").insert({
       voter_name: data.voterName,
       option_id: data.optionId,
