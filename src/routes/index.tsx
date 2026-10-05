@@ -1,7 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
-import { castVote, getVoteCounts, type OptionId } from "@/lib/votes.functions";
+import { useEffect, useState } from "react";
+import {
+  castVote,
+  getVoteCounts,
+  VOTING_DEADLINE_ISO,
+  type OptionId,
+} from "@/lib/votes.functions";
 
 const imgFloresta = { url: "/venues/casa-floresta.jpg" };
 const imgColmeia = { url: "/venues/colmeia.jpg" };
@@ -148,6 +153,11 @@ function Index() {
   const [submitting, setSubmitting] = useState(false);
   const [votedFor, setVotedFor] = useState<OptionId | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isClosed, setIsClosed] = useState(false);
+
+  useEffect(() => {
+    if (Date.now() >= Date.parse(VOTING_DEADLINE_ISO)) setIsClosed(true);
+  }, []);
 
   const total = OPTIONS.reduce((sum, o) => sum + (counts?.[o.id] ?? 0), 0);
   const votedOption = OPTIONS.find((o) => o.id === votedFor);
@@ -168,6 +178,10 @@ function Index() {
         data: { voterName: voterName.trim(), optionId: selected },
       });
       if (!result.ok) {
+        if (result.reason === "closed") {
+          setError("A votação foi encerrada em 08/10/2026. Obrigado pela participação!");
+          return;
+        }
         setError("Esse nome já votou. Cada professor pode votar uma única vez.");
         return;
       }
