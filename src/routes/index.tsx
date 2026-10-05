@@ -403,7 +403,7 @@ function Index() {
         </div>
 
         {/* name + confirm */}
-        {!votedFor && (
+        {!votedFor && !isClosed && (
           <div className="mt-8 rounded-[min(1.4vw,18px)] bg-card p-5 ring-1 ring-foreground/5 sm:p-6">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
               <div className="flex-1">
@@ -435,6 +435,18 @@ function Index() {
             {error && (
               <p className="mt-3 text-sm font-medium text-destructive">{error}</p>
             )}
+          </div>
+        )}
+
+        {/* voting closed */}
+        {!votedFor && isClosed && (
+          <div className="mt-8 rounded-[min(1.4vw,18px)] bg-card p-5 text-center ring-1 ring-foreground/5 sm:p-6">
+            <p className="font-display text-lg font-semibold tracking-tight">
+              Votação encerrada em 08/10/2026
+            </p>
+            <p className="mt-1.5 text-sm text-foreground/65">
+              Obrigado pela participação de todos! O resultado será divulgado em 30/11/2026.
+            </p>
           </div>
         )}
       </div>
