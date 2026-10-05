@@ -103,7 +103,7 @@ const OPTIONS: {
     address: "Avenida Nossa Senhora do Bom Sucesso, 4275 — Nossa Senhora do Perpétuo Socorro, Pindamonhangaba",
     distance: "Aproximadamente 8,2 km · 14 min do Senac",
     description: "Pizzas, porções e bebidas, com banda ou DJ incluso.",
-    menu: "Variedade de pizzas e porções. Bebidas: água mineral, suco e refrigerante.",
+    menu: "Entrada: fritas e fritas com queijo. Variedade de pizzas e porções. Bebidas: refrigerantes em lata (Coca-Cola, Guaraná Antarctica, Fanta laranja etc.), sucos (laranja, abacaxi, maracujá, caju, morango etc.) e água com gás e sem gás.",
     comfort: "Mesas de madeira, cadeiras de madeira estofadas, pratos brancos, talheres de inox, copos e taças adequados para cada bebida.",
     spaceScore: 2,
     foodScore: 3,
