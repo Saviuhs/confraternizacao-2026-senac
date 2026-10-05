@@ -208,7 +208,9 @@ function Index() {
             </span>
           </div>
           <span className="text-xs font-medium text-foreground/55 sm:text-sm">
-            Votação aberta até 10 de outubro
+            {isClosed
+              ? "Votação encerrada em 08/10/2026"
+              : "Votação aberta até 8 de outubro"}
           </span>
         </div>
       </div>
@@ -317,12 +319,15 @@ function Index() {
                 key={option.id}
                 role="button"
                 tabIndex={0}
-                onClick={() => !votedFor && setSelected(option.id)}
+                onClick={() => !votedFor && !isClosed && setSelected(option.id)}
                 onKeyDown={(e) => {
-                  if ((e.key === "Enter" || e.key === " ") && !votedFor) setSelected(option.id);
+                  if ((e.key === "Enter" || e.key === " ") && !votedFor && !isClosed)
+                    setSelected(option.id);
                 }}
                 aria-pressed={isSelected}
-                className={`group cursor-pointer rounded-[min(1.4vw,18px)] bg-card p-4 text-left ring-1 transition-transform duration-300 ${votedFor ? "" : "hover:-translate-y-1.5"} ${
+                className={`group rounded-[min(1.4vw,18px)] bg-card p-4 text-left ring-1 transition-transform duration-300 ${
+                  votedFor || isClosed ? "" : "cursor-pointer hover:-translate-y-1.5"
+                } ${
                   isSelected ? "ring-2 ring-primary" : "ring-foreground/5"
                 }`}
               >
