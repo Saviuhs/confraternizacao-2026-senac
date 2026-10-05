@@ -1,7 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
-import { castVote, getVoteCounts, type OptionId } from "@/lib/votes.functions";
+import { useEffect, useState } from "react";
+import {
+  castVote,
+  getVoteCounts,
+  VOTING_DEADLINE_ISO,
+  type OptionId,
+} from "@/lib/votes.functions";
 
 const imgFloresta = { url: "/venues/casa-floresta.jpg" };
 const imgColmeia = { url: "/venues/colmeia.jpg" };
@@ -148,6 +153,11 @@ function Index() {
   const [submitting, setSubmitting] = useState(false);
   const [votedFor, setVotedFor] = useState<OptionId | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isClosed, setIsClosed] = useState(false);
+
+  useEffect(() => {
+    if (Date.now() >= Date.parse(VOTING_DEADLINE_ISO)) setIsClosed(true);
+  }, []);
 
   const total = OPTIONS.reduce((sum, o) => sum + (counts?.[o.id] ?? 0), 0);
   const votedOption = OPTIONS.find((o) => o.id === votedFor);
@@ -168,6 +178,10 @@ function Index() {
         data: { voterName: voterName.trim(), optionId: selected },
       });
       if (!result.ok) {
+        if (result.reason === "closed") {
+          setError("A votação foi encerrada em 08/10/2026. Obrigado pela participação!");
+          return;
+        }
         setError("Esse nome já votou. Cada professor pode votar uma única vez.");
         return;
       }
@@ -194,7 +208,9 @@ function Index() {
             </span>
           </div>
           <span className="text-xs font-medium text-foreground/55 sm:text-sm">
-            Votação aberta até 10 de outubro
+            {isClosed
+              ? "Votação encerrada em 08/10/2026"
+              : "Votação aberta até 8 de outubro"}
           </span>
         </div>
       </div>
@@ -303,12 +319,15 @@ function Index() {
                 key={option.id}
                 role="button"
                 tabIndex={0}
-                onClick={() => !votedFor && setSelected(option.id)}
+                onClick={() => !votedFor && !isClosed && setSelected(option.id)}
                 onKeyDown={(e) => {
-                  if ((e.key === "Enter" || e.key === " ") && !votedFor) setSelected(option.id);
+                  if ((e.key === "Enter" || e.key === " ") && !votedFor && !isClosed)
+                    setSelected(option.id);
                 }}
                 aria-pressed={isSelected}
-                className={`group cursor-pointer rounded-[min(1.4vw,18px)] bg-card p-4 text-left ring-1 transition-transform duration-300 ${votedFor ? "" : "hover:-translate-y-1.5"} ${
+                className={`group rounded-[min(1.4vw,18px)] bg-card p-4 text-left ring-1 transition-transform duration-300 ${
+                  votedFor || isClosed ? "" : "cursor-pointer hover:-translate-y-1.5"
+                } ${
                   isSelected ? "ring-2 ring-primary" : "ring-foreground/5"
                 }`}
               >
@@ -384,7 +403,7 @@ function Index() {
         </div>
 
         {/* name + confirm */}
-        {!votedFor && (
+        {!votedFor && !isClosed && (
           <div className="mt-8 rounded-[min(1.4vw,18px)] bg-card p-5 ring-1 ring-foreground/5 sm:p-6">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
               <div className="flex-1">
@@ -416,6 +435,18 @@ function Index() {
             {error && (
               <p className="mt-3 text-sm font-medium text-destructive">{error}</p>
             )}
+          </div>
+        )}
+
+        {/* voting closed */}
+        {!votedFor && isClosed && (
+          <div className="mt-8 rounded-[min(1.4vw,18px)] bg-card p-5 text-center ring-1 ring-foreground/5 sm:p-6">
+            <p className="font-display text-lg font-semibold tracking-tight">
+              Votação encerrada em 08/10/2026
+            </p>
+            <p className="mt-1.5 text-sm text-foreground/65">
+              Obrigado pela participação de todos! O resultado será divulgado em 30/11/2026.
+            </p>
           </div>
         )}
       </div>
