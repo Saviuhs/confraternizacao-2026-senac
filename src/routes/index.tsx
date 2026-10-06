@@ -2,9 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
   castVote,
-  VOTING_DEADLINE_ISO,
+  getVoteCounts,
   type OptionId,
 } from "@/lib/votes.functions";
+import { isVotingClosed } from "@/lib/voting-schedule";
+import { Button } from "@/components/ui/button";
 
 const imgFloresta = { url: "/venues/casa-floresta.jpg" };
 const imgColmeia = { url: "/venues/colmeia.jpg" };
@@ -125,12 +127,12 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Professores, votem no local da nossa confraternização de fim de ano. O resultado será divulgado em 30/11/2026.",
+           "Professores, votem no local da nossa confraternização de fim de ano. O resultado será divulgado ao encerrar a votação em 08/10/2026.",
       },
       { property: "og:title", content: "Confraternização Senac Pindamonhangaba 04/12/2026" },
       {
         property: "og:description",
-        content: "Escolha o lugar da nossa festa de fim de ano. Cada voto conta!",
+        content: "Escolha o lugar da nossa festa de fim de ano. Resultado disponível após o encerramento da votação em 08/10/2026.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -146,12 +148,35 @@ function Index() {
   const [votedFor, setVotedFor] = useState<OptionId | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isClosed, setIsClosed] = useState(false);
+  const [counts, setCounts] = useState<Record<OptionId, number> | null>(null);
+  const [resultsError, setResultsError] = useState(false);
 
   useEffect(() => {
-    if (Date.now() >= Date.parse(VOTING_DEADLINE_ISO)) setIsClosed(true);
+    const check = () => setIsClosed(isVotingClosed());
+    check();
+    const timer = window.setInterval(check, 1000);
+    return () => window.clearInterval(timer);
   }, []);
 
+  async function loadResults() {
+    setResultsError(false);
+    try {
+      const result = await getVoteCounts();
+      setCounts(result);
+    } catch {
+      setResultsError(true);
+    }
+  }
+
+  useEffect(() => {
+    if (isClosed) void loadResults();
+  }, [isClosed]);
+
   const votedOption = OPTIONS.find((o) => o.id === votedFor);
+  const totalVotes = counts ? Object.values(counts).reduce((sum, count) => sum + count, 0) : 0;
+  const rankedOptions = counts
+    ? [...OPTIONS].sort((a, b) => counts[b.id] - counts[a.id])
+    : [];
 
   async function handleVote() {
     setError(null);
@@ -170,6 +195,7 @@ function Index() {
       });
       if (!result.ok) {
         if (result.reason === "closed") {
+          setIsClosed(true);
           setError("A votação foi encerrada em 08/10/2026. Obrigado pela participação!");
           return;
         }
@@ -389,11 +415,42 @@ function Index() {
               Votação encerrada em 08/10/2026
             </p>
             <p className="mt-1.5 text-sm text-foreground/65">
-              Obrigado pela participação de todos! O resultado será divulgado em 30/11/2026.
+               Obrigado pela participação de todos! Confira o resultado abaixo.
             </p>
           </div>
         )}
       </div>
+
+      {isClosed && (
+        <section className="mx-auto max-w-6xl px-5 pb-16 sm:px-8" aria-labelledby="results-title">
+          <h2 id="results-title" className="font-display text-2xl font-semibold sm:text-3xl">Resultado da votação</h2>
+          {resultsError ? (
+            <div className="mt-4">
+              <p className="text-destructive">Não foi possível carregar o resultado.</p>
+              <Button variant="outline" className="mt-3" onClick={loadResults}>Tentar novamente</Button>
+            </div>
+          ) : counts ? (
+            <>
+              <p className="mt-2 text-sm text-foreground/65">{totalVotes} {totalVotes === 1 ? "voto registrado" : "votos registrados"}</p>
+              {totalVotes === 0 && <p className="mt-4">Nenhum voto foi registrado.</p>}
+              <ol className="mt-5 divide-y divide-foreground/10">
+                {rankedOptions.map((option) => (
+                  <li key={option.id} className="py-4">
+                    <div className="flex flex-wrap items-baseline justify-between gap-2">
+                      <h3 className="font-semibold">{option.name}</h3>
+                      <span className="text-sm text-foreground/70">
+                        {counts[option.id]} {counts[option.id] === 1 ? "voto" : "votos"} · {totalVotes ? (counts[option.id] / totalVotes * 100).toFixed(1).replace(".", ",") : "0,0"}%
+                      </span>
+                    </div>
+                    <progress className="mt-2 h-2 w-full accent-primary" value={counts[option.id]} max={totalVotes || 1} aria-label={`Votos para ${option.name}`} />
+                  </li>
+                ))}
+              </ol>
+              <p className="mt-4 text-sm text-foreground/65">A opção mais votada será considerada como prioridade, respeitando o orçamento disponível e os critérios de contratação.</p>
+            </>
+          ) : <p className="mt-4 text-foreground/65" role="status">Carregando resultado…</p>}
+        </section>
+      )}
 
       {/* vote confirmation */}
       {votedFor && votedOption && (
@@ -415,8 +472,8 @@ function Index() {
                 <p className="mt-2 max-w-[48ch] text-sm text-pretty text-background/75 sm:text-base">
                   Você escolheu{" "}
                   <span className="font-semibold text-gold">{votedOption.name}</span>.
-                  Obrigado por participar — o resultado final é divulgado no dia 30 de
-                  novembro e a confraternização será em 04/12/2026.
+                   Obrigado por participar — o resultado será divulgado ao encerrar a
+                   votação em 08/10/2026 e a confraternização será em 04/12/2026.
                 </p>
               </div>
             </div>

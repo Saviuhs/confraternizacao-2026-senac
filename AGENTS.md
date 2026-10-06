@@ -11,3 +11,4 @@
 
 - Keep the existing vote option identifiers stable when venue content changes, because persisted vote totals depend on them.
 - Vote server functions fall back to the public (publishable) backend URL/key when server env vars are missing, so external hosts like Vercel work without extra setup.
+- Use the shared voting schedule for both vote submission and results release, so closing and disclosure stay synchronized; the results server function returns no totals before closing.
