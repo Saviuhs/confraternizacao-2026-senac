@@ -1,9 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import {
   castVote,
-  getVoteCounts,
   VOTING_DEADLINE_ISO,
   type OptionId,
 } from "@/lib/votes.functions";
@@ -127,7 +125,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Professores, votem no local da nossa confraternização de fim de ano e acompanhem o resultado ao vivo.",
+          "Professores, votem no local da nossa confraternização de fim de ano. O resultado será divulgado em 30/11/2026.",
       },
       { property: "og:title", content: "Confraternização Senac Pindamonhangaba 04/12/2026" },
       {
@@ -142,12 +140,6 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const queryClient = useQueryClient();
-  const { data: counts } = useQuery({
-    queryKey: ["vote-counts"],
-    queryFn: () => getVoteCounts(),
-  });
-
   const [voterName, setVoterName] = useState("");
   const [selected, setSelected] = useState<OptionId | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -159,7 +151,6 @@ function Index() {
     if (Date.now() >= Date.parse(VOTING_DEADLINE_ISO)) setIsClosed(true);
   }, []);
 
-  const total = OPTIONS.reduce((sum, o) => sum + (counts?.[o.id] ?? 0), 0);
   const votedOption = OPTIONS.find((o) => o.id === votedFor);
 
   async function handleVote() {
@@ -186,7 +177,6 @@ function Index() {
         return;
       }
       setVotedFor(selected);
-      await queryClient.invalidateQueries({ queryKey: ["vote-counts"] });
     } catch {
       setError("Algo deu errado. Tente novamente em instantes.");
     } finally {
@@ -215,20 +205,16 @@ function Index() {
         </div>
       </div>
 
-      {/* hero: title + live results */}
+      {/* apresentação da votação */}
       <div className="mx-auto max-w-6xl px-5 pt-10 pb-8 sm:px-8 sm:pt-14">
-        <div className="grid items-start gap-8 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-5">
-            <span className="inline-flex items-center gap-2 rounded-full bg-leaf/12 px-3 py-1 text-xs font-semibold tracking-wide text-leaf">
-              <span className="size-1.5 rounded-full bg-leaf"></span>
-              Resultado ao vivo
-            </span>
-            <h1 className="mt-5 max-w-[24ch] font-display text-4xl font-semibold leading-none tracking-tight text-balance sm:text-5xl">
+        <div>
+          <div>
+            <h1 className="max-w-[24ch] font-display text-4xl font-semibold leading-none tracking-tight text-balance sm:text-5xl">
               Onde será a nossa{" "}
               <span className="italic text-primary">confraternização</span> de fim de
               ano?
             </h1>
-            <div className="mt-5 max-w-[48ch] space-y-4 text-base font-bold text-pretty text-foreground sm:text-lg leading-relaxed">
+            <div className="mt-5 max-w-[80ch] space-y-4 text-base font-bold text-pretty text-foreground sm:text-lg leading-relaxed">
               <p>
                 Visando definir o local da nossa confraternização de fim de ano,
                 que será realizada em 04/12/2026, convidamos todos e todas a
@@ -240,8 +226,7 @@ function Index() {
                 local que melhor atenda às preferências do grupo.
               </p>
               <p>
-                Contamos com a participação de todos e todas. Os resultados
-                poderão ser acompanhados em tempo real. A opção mais votada
+                 Contamos com a participação de todos e todas. A opção mais votada
                 será considerada como prioridade, desde que esteja dentro do
                 orçamento disponível e atenda aos critérios de contratação. Caso
                 não atenda a esses critérios de contratação, seguiremos para o
@@ -249,11 +234,6 @@ function Index() {
               </p>
             </div>
             <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
-              <div className="flex items-baseline gap-1.5">
-                <span className="font-display text-3xl font-semibold">{total}</span>
-                <span className="text-sm text-foreground/55">votos apurados</span>
-              </div>
-              <span className="h-4 w-px bg-foreground/15"></span>
               <div className="flex items-baseline gap-1.5">
                 <span className="font-display text-3xl font-semibold">
                   {OPTIONS.length}
@@ -263,42 +243,6 @@ function Index() {
             </div>
           </div>
 
-          {/* results */}
-          <div className="lg:col-span-7">
-            <div className="rounded-[min(1.4vw,20px)] bg-card p-5 ring-1 ring-foreground/5 sm:p-7">
-              <div className="mb-5 flex items-center justify-between">
-                <h2 className="font-display text-xl font-semibold tracking-tight">
-                  Resultado da votação
-                </h2>
-                <span className="text-xs font-medium text-foreground/45">
-                  atualizado ao vivo
-                </span>
-              </div>
-              {OPTIONS.map((option, i) => {
-                const votes = counts?.[option.id] ?? 0;
-                const pct = total > 0 ? Math.round((votes / total) * 100) : 0;
-                return (
-                  <div key={option.id} className={i < OPTIONS.length - 1 ? "mb-5" : ""}>
-                    <div className="mb-1.5 flex items-center justify-between text-sm">
-                      <span className="font-semibold">{option.name}</span>
-                      <span className="font-medium tabular-nums text-foreground/70">
-                        {votes} votos · {pct}%
-                      </span>
-                    </div>
-                    <div className="h-3 overflow-hidden rounded-full bg-foreground/8">
-                      <div
-                        className={`bar-fill h-full rounded-full ${option.barClass}`}
-                        style={{
-                          width: `${pct}%`,
-                          animationDelay: `${0.05 + i * 0.1}s`,
-                        }}
-                      ></div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
         </div>
       </div>
 
@@ -487,7 +431,7 @@ function Index() {
             Confraternização Senac Pindamonhangaba 04/12/2026 · Associação de Professores
           </span>
           <span className="text-xs text-foreground/40">
-            Um voto por professor · resultados em tempo real
+            Um voto por professor
           </span>
         </div>
       </div>
