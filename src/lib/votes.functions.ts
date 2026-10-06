@@ -2,6 +2,8 @@ import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
 import { z } from "zod";
 import type { Database } from "@/integrations/supabase/types";
+import { isVotingClosed } from "./voting-schedule";
+export { VOTING_DEADLINE_ISO } from "./voting-schedule";
 
 export const OPTION_IDS = [
   "churrascaria",
@@ -11,9 +13,6 @@ export const OPTION_IDS = [
   "armazem",
 ] as const;
 export type OptionId = (typeof OPTION_IDS)[number];
-
-// Fim da votação: 08/10/2026, 23:59:59 no horário de Brasília (UTC-3).
-export const VOTING_DEADLINE_ISO = "2026-10-09T03:00:00.000Z";
 
 // Publishable (public) values used as fallback when hosting outside Lovable
 // (e.g. Vercel) doesn't define the server env vars.
@@ -43,6 +42,7 @@ function publicClient() {
 }
 
 export const getVoteCounts = createServerFn({ method: "GET" }).handler(async () => {
+  if (!isVotingClosed()) return null;
   const supabase = publicClient();
   const { data, error } = await supabase.rpc("get_vote_counts");
   if (error) throw new Error("Não foi possível carregar os resultados.");
@@ -68,7 +68,7 @@ export const castVote = createServerFn({ method: "POST" })
   .inputValidator((data) => voteSchema.parse(data))
   .handler(async ({ data }) => {
     const supabase = publicClient();
-    if (Date.now() >= Date.parse(VOTING_DEADLINE_ISO)) {
+    if (isVotingClosed()) {
       return { ok: false as const, reason: "closed" as const };
     }
     const { error } = await supabase.from("votes").insert({
