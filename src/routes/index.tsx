@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { Clock3 } from "lucide-react";
 import {
   castVote,
   getVoteCounts,
   type OptionId,
 } from "@/lib/votes.functions";
-import { isVotingClosed } from "@/lib/voting-schedule";
+import { getVotingCountdown, isVotingClosed } from "@/lib/voting-schedule";
 import { Button } from "@/components/ui/button";
 
 const imgFloresta = { url: "/venues/casa-floresta.jpg" };
@@ -148,11 +149,16 @@ function Index() {
   const [votedFor, setVotedFor] = useState<OptionId | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isClosed, setIsClosed] = useState(false);
+  const [countdown, setCountdown] = useState<ReturnType<typeof getVotingCountdown> | null>(null);
   const [counts, setCounts] = useState<Record<OptionId, number> | null>(null);
   const [resultsError, setResultsError] = useState(false);
 
   useEffect(() => {
-    const check = () => setIsClosed(isVotingClosed());
+    const check = () => {
+      const now = Date.now();
+      setIsClosed(isVotingClosed(now));
+      setCountdown(getVotingCountdown(now));
+    };
     check();
     const timer = window.setInterval(check, 1000);
     return () => window.clearInterval(timer);
@@ -226,10 +232,36 @@ function Index() {
           <span className="text-xs font-medium text-foreground/55 sm:text-sm">
             {isClosed
               ? "Votação encerrada em 08/10/2026"
-              : "Votação aberta até 8 de outubro"}
+               : "Votação até 08/10 às 23h59"}
           </span>
         </div>
       </div>
+
+      {!isClosed && countdown && (
+        <section className="border-b border-primary/20 bg-primary/10" aria-label="Prazo da votação">
+          <div className="mx-auto flex max-w-6xl flex-col gap-5 px-5 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+            <div className="flex items-start gap-3">
+              <Clock3 className="mt-1 size-6 shrink-0 text-primary" aria-hidden="true" />
+              <div>
+                <p className="text-lg font-bold">Votações encerram às 23h59 de hoje, 08/10/2026</p>
+                <p className="mt-1 text-sm text-foreground/75">Horário de Brasília · Resultado final em 09/10/2026</p>
+              </div>
+            </div>
+            <div role="timer" aria-label="Tempo restante para votar" className="flex shrink-0 items-start gap-3 tabular-nums">
+              {([
+                ["Horas", countdown.hours],
+                ["Minutos", countdown.minutes],
+                ["Segundos", countdown.seconds],
+              ] as const).map(([label, value]) => (
+                <div key={label} className="w-16 text-center">
+                  <span className="block font-display text-3xl font-bold leading-tight">{String(value).padStart(2, "0")}</span>
+                  <span className="text-xs font-medium text-foreground/70">{label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* apresentação da votação */}
       <div className="mx-auto max-w-6xl px-5 pt-10 pb-8 sm:px-8 sm:pt-14">
