@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { createClient } from "@supabase/supabase-js";
 import { z } from "zod";
 import type { Database } from "@/integrations/supabase/types";
-import { isVotingClosed } from "./voting-schedule";
+import { getPublicVoteResults, isVotingClosed } from "./voting-schedule";
 export { VOTING_DEADLINE_ISO } from "./voting-schedule";
 
 export const OPTION_IDS = [
@@ -42,7 +42,7 @@ function publicClient() {
 }
 
 // Public results are never disclosed, including after the voting deadline.
-export const getVoteCounts = createServerFn({ method: "GET" }).handler(async () => null);
+export const getVoteCounts = createServerFn({ method: "GET" }).handler(async () => getPublicVoteResults());
 
 const voteSchema = z.object({
   voterName: z
