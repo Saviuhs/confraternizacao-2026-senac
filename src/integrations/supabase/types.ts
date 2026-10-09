@@ -14,6 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      transport_responses: {
+        Row: {
+          created_at: string
+          id: string
+          needs_transport: boolean
+          participant_name: string | null
+        }
+        Insert: {
+          created_at?: string
+          id: string
+          needs_transport: boolean
+          participant_name?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          needs_transport?: boolean
+          participant_name?: string | null
+        }
+        Relationships: []
+      }
       votes: {
         Row: {
           created_at: string
