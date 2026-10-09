@@ -5,6 +5,11 @@ export function isVotingClosed(now = Date.now()) {
   return now >= Date.parse(VOTING_DEADLINE_ISO);
 }
 
+// The public site never releases totals, regardless of the voting deadline.
+export function getPublicVoteResults(_now = Date.now()): null {
+  return null;
+}
+
 export function getVotingCountdown(now = Date.now()) {
   const secondsLeft = Math.max(0, Math.ceil((Date.parse(VOTING_DEADLINE_ISO) - now) / 1000));
   return {

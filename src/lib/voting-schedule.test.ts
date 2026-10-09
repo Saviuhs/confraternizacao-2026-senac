@@ -1,13 +1,13 @@
 import { describe, it as test } from "node:test";
 import assert from "node:assert/strict";
-import { getVotingCountdown, isVotingClosed } from "./voting-schedule";
+import { getPublicVoteResults, getVotingCountdown, isVotingClosed } from "./voting-schedule";
 
-describe("results are released only when voting closes", () => {
-  test("voting remains open and results hidden through October 8 in Brasília", () => {
+describe("voting deadline and permanent public results privacy", () => {
+  test("voting remains open through October 8 in Brasília", () => {
     assert.equal(isVotingClosed(Date.parse("2026-10-08T23:59:59.999-03:00")), false);
   });
 
-  test("voting closes and results are released at midnight after October 8", () => {
+  test("voting closes at midnight after October 8", () => {
     assert.equal(isVotingClosed(Date.parse("2026-10-09T00:00:00.000-03:00")), true);
   });
 
@@ -21,5 +21,11 @@ describe("results are released only when voting closes", () => {
     assert.deepEqual(getVotingCountdown(Date.parse("2026-10-09T12:00:00-03:00")), {
       hours: 0, minutes: 0, seconds: 0,
     });
+  });
+
+  test("public results stay hidden before closing, on October 9 and thereafter", () => {
+    for (const date of ["2026-10-08T23:59:59.999-03:00", "2026-10-09T00:00:00-03:00", "2026-12-04T12:00:00-03:00"]) {
+      assert.equal(getPublicVoteResults(Date.parse(date)), null);
+    }
   });
 });

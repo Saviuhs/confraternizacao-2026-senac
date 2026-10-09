@@ -81,7 +81,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Professores, votem no local da nossa confraternização de fim de ano. O resultado será divulgado ao encerrar a votação em 08/10/2026.",
+          "Professores, votem no local da nossa confraternização de fim de ano. A votação encerra em 08/10/2026 às 23h59, horário de Brasília.",
       },
       { property: "og:title", content: "Confraternização Senac Pindamonhangaba 04/12/2026" },
       {
