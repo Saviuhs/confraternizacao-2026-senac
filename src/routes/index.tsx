@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Clock3 } from "lucide-react";
+import { TransportPoll } from "@/components/transport-poll";
 import {
   castVote,
   type OptionId,
@@ -126,12 +127,12 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-           "Professores, votem no local da nossa confraternização de fim de ano. A votação encerra em 08/10/2026 às 23h59, horário de Brasília.",
+           "Confraternização Senac Pindamonhangaba em 04/12/2026. Responda à enquete sobre necessidade de condução. A votação dos locais está encerrada.",
       },
       { property: "og:title", content: "Confraternização Senac Pindamonhangaba 04/12/2026" },
       {
         property: "og:description",
-        content: "Escolha o lugar da nossa festa de fim de ano. Votação até 08/10/2026 às 23h59, horário de Brasília.",
+        content: "Confraternização em 04/12/2026: informe se precisa de condução. Votação dos locais encerrada, sem divulgação pública dos resultados.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -214,6 +215,8 @@ function Index() {
           </span>
         </div>
       </div>
+
+      <TransportPoll />
 
       {!isClosed && countdown && (
         <section className="border-b border-primary/20 bg-primary/10" aria-label="Prazo da votação">

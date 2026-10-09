@@ -14,3 +14,5 @@
 - Use the shared voting schedule for vote submission and the closed UI, so both enforce the same deadline.
 - Keep the public results server function returning null at all times; internal organizer reports must not disclose totals through the public site.
 - Derive the visible countdown from the shared voting schedule after hydration, so its clock matches closing and avoids server/client mismatches.
+- Keep transport responses in a separate insert-only public-submission table with no public read policy, so participant names remain private and the venue voting deadline does not close the transport poll.
+- Validate transport submissions with the same discriminated schema in the browser and server function, so conditional name requirements cannot be bypassed through the endpoint.
