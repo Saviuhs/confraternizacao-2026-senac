@@ -41,19 +41,8 @@ function publicClient() {
   });
 }
 
-export const getVoteCounts = createServerFn({ method: "GET" }).handler(async () => {
-  if (!isVotingClosed()) return null;
-  const supabase = publicClient();
-  const { data, error } = await supabase.rpc("get_vote_counts");
-  if (error) throw new Error("Não foi possível carregar os resultados.");
-  const counts = Object.fromEntries(OPTION_IDS.map((id) => [id, 0])) as Record<OptionId, number>;
-  for (const row of data ?? []) {
-    if (OPTION_IDS.includes(row.option_id as OptionId)) {
-      counts[row.option_id as OptionId] = Number(row.total);
-    }
-  }
-  return counts;
-});
+// Public results are never disclosed, including after the voting deadline.
+export const getVoteCounts = createServerFn({ method: "GET" }).handler(async () => null);
 
 const voteSchema = z.object({
   voterName: z
