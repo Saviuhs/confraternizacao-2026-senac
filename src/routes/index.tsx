@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import { CalendarDays, Car, CheckCircle2, Clock, MapPin, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import invite from "@/assets/convite-confraternizacao.jpg.asset.json";
 import { attendanceSchema } from "@/lib/attendance-schema";
 import { isAttendanceClosed } from "@/lib/attendance-schedule";
 import { submitAttendance } from "@/lib/attendance.functions";
@@ -18,7 +17,9 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Confraternização Senac Pindamonhangaba 04/12/2026" },
       { property: "og:description", content: "04/12/2026 às 18h30 no Intercity Pátio Pinda Hotel & Resort. Confirme sua presença até 27/11." },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
+      { property: "og:image", content: "https://confraternizacao-2026-senac.lovable.app/convite-confraternizacao.jpg" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "https://confraternizacao-2026-senac.lovable.app/convite-confraternizacao.jpg" },
     ],
   }),
   component: Index,
@@ -78,7 +79,7 @@ function Index() {
       </header>
 
       <main className="mx-auto grid max-w-6xl gap-10 px-5 py-10 sm:px-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-start">
-        <img src={invite.url} alt="Convite da confraternização de fim de ano do Senac Pindamonhangaba" width={1357} height={1920} className="w-full rounded-2xl border border-border shadow-2xl" />
+        <img src="/convite-confraternizacao.jpg" alt="Convite da confraternização de fim de ano do Senac Pindamonhangaba" width={1357} height={1920} className="w-full rounded-2xl border border-border shadow-2xl" />
 
         <div className="space-y-8">
           <div>
