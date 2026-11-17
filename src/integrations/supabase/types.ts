@@ -14,6 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      attendance_responses: {
+        Row: {
+          created_at: string
+          id: string
+          participant_name: string
+          will_attend: boolean
+        }
+        Insert: {
+          created_at?: string
+          id: string
+          participant_name: string
+          will_attend: boolean
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          participant_name?: string
+          will_attend?: boolean
+        }
+        Relationships: []
+      }
       transport_responses: {
         Row: {
           created_at: string
@@ -68,6 +89,7 @@ export type Database = {
           total: number
         }[]
       }
+      normalize_person_name: { Args: { n: string }; Returns: string }
     }
     Enums: {
       [_ in never]: never

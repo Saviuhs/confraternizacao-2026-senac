@@ -29,6 +29,13 @@
       "when": 1791577444061,
       "tag": "0003_create_transport_responses",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1794929962091,
+      "tag": "0004_create_attendance_responses",
+      "breakpoints": true
     }
   ]
 }
